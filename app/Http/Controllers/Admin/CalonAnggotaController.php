@@ -35,7 +35,7 @@ class CalonAnggotaController extends Controller
 
         CalonAnggota::find($calonAnggota->id)->update(
             [
-                'qr_code'   => asset("{$calonAnggota->nim}.png")
+                'qr_code'   => asset("{$calonAnggota->nim}.svg")
             ]
         );
 
