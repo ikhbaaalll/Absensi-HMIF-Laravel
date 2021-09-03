@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\KegiatanControllerApi;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'api', 'prefix' => 'v1'], function () {
+    Route::post('login',        [UserController::class, 'login']);
+    Route::post('logout',       [UserController::class, 'logout']);
+
+    Route::post('kegiatan/absen',   [KegiatanControllerApi::class, 'absen']);
+
+    Route::apiResource('kegiatan',  KegiatanControllerApi::class)->only(['store', 'index', 'show', 'update']);
 });

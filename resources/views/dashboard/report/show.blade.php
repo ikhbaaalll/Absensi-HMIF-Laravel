@@ -17,6 +17,11 @@ Absensi Kegiatan {{$kegiatan->judul}}
             <h6 class="m-0 font-weight-bold text-primary">Absensi Kegiatan {{$kegiatan->judul}}</h6>
         </div>
         <div class="card-body">
+            @if (session('status'))
+            <div class="alert alert-success mt-3">
+                {{ session('status') }}
+            </div>
+            @endif
             <div class="table-responsive">
                 <table class="table table-bordered" id="example1" width="100%" cellspacing="0">
                     <thead>
@@ -24,16 +29,25 @@ Absensi Kegiatan {{$kegiatan->judul}}
                             <th>Nama</th>
                             <th>NIM</th>
                             <th>Program Studi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($kegiatan->absen as $absen)
                         <tr>
-                            <td>{{$absen->nama}}</td>
-                            <td>{{$absen->nim}}</td>
-                            <td>{{$absen->prodi}}</td>
+                            <td>{{$absen->calonAnggota->nama}}</td>
+                            <td>{{$absen->calonAnggota->nim}}</td>
+                            <td>{{$absen->calonAnggota->prodi}}</td>
+                            <td>
+                                <form action="{{route('presensi.destroy', $absen->id)}}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <input type="hidden" name="kegiatan" value="{{$absen->kegiatan_id}}">
+                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
-                        @empty($kegiatans)
+                        @empty($kegiatan->absen)
                         <tr>
                             <td colspan="3">Tidak ada data absensi</td>
                         </tr>

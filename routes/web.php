@@ -23,4 +23,5 @@ Auth::routes(['except' => 'register']);
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('kegiatan', ReportController::class)->only(['index', 'show']);
     Route::resource('calonanggota', CalonAnggotaController::class);
+    Route::delete('presensi/destroy/{id}',   [ReportController::class, 'destroy'])->name('presensi.destroy');
 });

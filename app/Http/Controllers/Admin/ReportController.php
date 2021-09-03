@@ -18,8 +18,15 @@ class ReportController extends Controller
 
     public function show(Kegiatan $kegiatan)
     {
-        $kegiatan = $kegiatan->load('absen');
+        $kegiatan = $kegiatan->load('absen', 'absen.calonAnggota');
 
-        return view('dashboad.report.show', compact('absens'));
+        return view('dashboard.report.show', compact('kegiatan'));
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        Absen::find($id)->delete();
+
+        return redirect()->route('kegiatan.show', $request->kegiatan)->with('status', 'Sukses menghapus presensi');
     }
 }

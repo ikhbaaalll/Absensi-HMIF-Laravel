@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CalonAnggotaStoreRequest;
 use App\Models\CalonAnggota;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use LaravelQRCode\Facades\QRCode;
 
 class CalonAnggotaController extends Controller
@@ -31,7 +31,7 @@ class CalonAnggotaController extends Controller
     {
         $calonAnggota = CalonAnggota::create($request->validated());
 
-        QRCode::text(Hash::make($calonAnggota->id))->setOutfile($calonAnggota->nim . '.png')->png();
+        QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile('public/qr_code/' . $calonAnggota->nim . '.svg')->svg();
 
         CalonAnggota::find($calonAnggota->id)->update(
             [

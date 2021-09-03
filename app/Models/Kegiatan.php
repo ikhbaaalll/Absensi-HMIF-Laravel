@@ -16,7 +16,8 @@ class Kegiatan extends Model
     public $fillable = [
         'judul',
         'tempat',
-        'waktu'
+        'waktu',
+        'password'
     ];
 
     public function absen()

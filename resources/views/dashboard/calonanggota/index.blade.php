@@ -42,7 +42,7 @@ Daftar Calon Anggota
                             <td>{{$calonAnggota->nama}}</td>
                             <td>{{$calonAnggota->nim}}</td>
                             <td>{{$calonAnggota->prodi}}</td>
-                            <td>{{$calonAnggota->qr_code}}</td>
+                            <td><a href="{{$calonAnggota->qr_code}}">Lihat QR</a></td>
                             <td>
                                 <a href="{{ route('calonanggota.edit', ['calonanggotum' => $calonAnggota]) }}"
                                     class="btn btn-sm btn-warning">Edit</a>
