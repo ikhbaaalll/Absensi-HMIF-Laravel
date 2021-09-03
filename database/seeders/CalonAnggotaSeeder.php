@@ -25,11 +25,11 @@ class CalonAnggotaSeeder extends Seeder
                 'prodi' => $data[2]
             ]);
 
-            QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile('public/qr_code/' . $calonAnggota->nim . '.svg')->svg();
+            QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile('public' . $calonAnggota->nim . '.svg')->svg();
 
             CalonAnggota::find($calonAnggota->id)->update(
                 [
-                    'qr_code'   => asset("qr_code/{$calonAnggota->nim}.svg")
+                    'qr_code'   => asset("{$calonAnggota->nim}.svg")
                 ]
             );
         }
