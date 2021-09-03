@@ -31,7 +31,7 @@ class CalonAnggotaController extends Controller
     {
         $calonAnggota = CalonAnggota::create($request->validated());
 
-        QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile('public/qr_code/' . $calonAnggota->nim . '.svg')->svg();
+        QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile($calonAnggota->nim . '.svg')->svg();
 
         CalonAnggota::find($calonAnggota->id)->update(
             [
