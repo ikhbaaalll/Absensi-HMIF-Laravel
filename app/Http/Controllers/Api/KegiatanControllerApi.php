@@ -15,22 +15,22 @@ use Illuminate\Support\Facades\Validator;
 
 class KegiatanControllerApi extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kegiatans = KegiatanResource::collection(Kegiatan::all());
+        $kegiatans = KegiatanResource::collection(Kegiatan::where('kegiatan', $request->kegiatan)->get());
+
+        return response()->json(
+            [
+                'kegiatan' => $kegiatans
+            ]
+        );
     }
 
     public function show(Request $request, $id)
     {
-        $checkPassword = Kegiatan::where('id', $id)->where('password', $request->password)->first();
-
-        if (!$checkPassword) {
-            return response()->json(['error' => 'Password salah'], 422);
-        }
-
         $absen = Absen::with('calonAnggota')->where('kegiatan_id', $id)->get();
 
-        return response()->json(['kegiatan' => $absen], 200);
+        return response()->json(['absen' => $absen], 200);
     }
 
     public function store(Request $request)

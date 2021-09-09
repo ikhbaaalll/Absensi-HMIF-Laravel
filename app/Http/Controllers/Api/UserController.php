@@ -20,7 +20,7 @@ class UserController extends Controller
                 'email.required'    => 'Mohon masukkan email',
                 'email.email'       => 'Email tidak sesuai',
                 'password.required' => 'Mohon masukkan password',
-                'password.min'      => 'Masukkan password minimal 8 karakter'
+                'password.min'      => 'Masukkan password minimal 1 karakter'
             ]
         );
 

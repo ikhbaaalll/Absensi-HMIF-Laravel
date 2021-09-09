@@ -23,6 +23,7 @@ Daftar Kegiatan
                         <tr>
                             <th>Judul</th>
                             <th>Tempat</th>
+                            <th>Kegiatan</th>
                             <th>Waktu</th>
                             <th>Aksi</th>
                         </tr>
@@ -32,6 +33,7 @@ Daftar Kegiatan
                         <tr>
                             <td>{{$kegiatan->judul}}</td>
                             <td>{{$kegiatan->tempat}}</td>
+                            <td>{{$kegiatan->kegiatan}}</td>
                             <td>{{$kegiatan->waktu->format('d-m-Y H:i')}}</td>
                             <td>
                                 <a href="{{ route('kegiatan.show', $kegiatan) }}"

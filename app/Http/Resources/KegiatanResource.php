@@ -14,12 +14,12 @@ class KegiatanResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray(
-            [
-                'judul'     => $this->judul,
-                'tempat'    => $this->tempat,
-                'waktu'     => $this->waktu->format('d-m-Y H:i')
-            ]
-        );
+        return [
+            'judul'     => $this->judul,
+            'tempat'    => $this->tempat,
+            'waktu'     => $this->waktu->format('d-m-Y H:i'),
+            'kegiatan'  => $this->kegiatan,
+            'password'  => $this->password
+        ];
     }
 }
