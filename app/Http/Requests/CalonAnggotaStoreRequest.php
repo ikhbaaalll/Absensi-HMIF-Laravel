@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CalonAnggotaStoreRequest extends FormRequest
 {
@@ -23,9 +24,13 @@ class CalonAnggotaStoreRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = $this->method() === "POST" ?
+            Rule::unique('calon_anggotas') :
+            Rule::unique('calon_anggotas')->ignore($this->calonanggotum->id);
+
         return [
             'nama'  => ['required'],
-            'nim'   => ['required', 'numeric', 'digits_between:8,9'],
+            'nim'   => ['required', 'numeric', 'digits_between:8,9', $rules],
             'prodi' => ['required']
         ];
     }
@@ -37,6 +42,7 @@ class CalonAnggotaStoreRequest extends FormRequest
             'nim.required'          => 'Masukkan field nim',
             'nim.numeric'           => 'Masukkan nim dengan angka',
             'nim.digits_between'    => 'Masukkan NIM 8-9 karakter',
+            'nim.unique'            => 'NIM telah digunakan',
             'prodi.required'        => 'Masukkan field prodi'
         ];
     }

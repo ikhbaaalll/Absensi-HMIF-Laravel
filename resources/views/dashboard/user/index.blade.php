@@ -14,7 +14,7 @@ Daftar Calon Anggota
 <div class="row">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar Calon Anggota</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar User</h6>
         </div>
         <div class="card-body">
             @if (session('status'))
@@ -23,43 +23,37 @@ Daftar Calon Anggota
             </div>
             @endif
             <div class="my-3">
-                <a href="{{route('calonanggota.create')}}" class="btn btn-primary">Tambah Calon Anggota</a>
+                <a href="{{route('user.create')}}" class="btn btn-primary">Tambah User</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered" id="example1" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>NIM</th>
-                            <th>Prodi</th>
-                            <th>QR Code</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($calonAnggotas as $calonAnggota)
+                        @forelse ($users as $user)
                         <tr>
-                            <td>{{$calonAnggota->nama}}</td>
-                            <td>{{$calonAnggota->nim}}</td>
-                            <td>{{$calonAnggota->prodi}}</td>
-                            <td><a href="{{$calonAnggota->qr_code}}" download>Lihat QR</a></td>
+                            <td>{{$user->name}}</td>
                             <td>
-                                <a href="{{ route('calonanggota.edit', ['calonanggotum' => $calonAnggota]) }}"
+                                <a href="{{ route('user.edit', $user) }}"
                                     class="btn btn-sm btn-warning">Edit</a>
                                 <form class="d-inline"
-                                    action="{{route('calonanggota.destroy', ['calonanggotum' => $calonAnggota])}}"
+                                    action="{{route('user.destroy', $user)}}"
                                     method="POST">
                                     @csrf
                                     @method("DELETE")
                                     <button type="submit"
-                                        onclick="return confirm('Yakin ingin menghapus {{$calonAnggota->nama}}')"
+                                        onclick="return confirm('Yakin ingin menghapus {{$user->name}}')"
                                         class="btn btn-sm btn-danger d-inline-block">Hapus</button>
                                 </form>
                             </td>
                         </tr>
-                        @empty($calonAnggotas)
+                        @empty($users)
                         <tr>
-                            <td colspan="5">Tidak ada data kegiatan</td>
+                            <td colspan="2">Tidak ada data kegiatan</td>
                         </tr>
                         @endempty
                         @endforeach

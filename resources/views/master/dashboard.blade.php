@@ -35,17 +35,9 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-                <div class="sidebar-brand-icon">
-                    <img src="{{ asset('asset/logo/itera.png') }}" width="32px" height="35px" />
-                </div>
-                <div class="sidebar-brand-text mx-3">...</div>
-            </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
+            <hr class="sidebar-divider d-none d-md-block">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('kegiatan.index') }}">
@@ -114,8 +106,17 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                @if(auth()->id() == 1)
+                                <a class="dropdown-item" href="{{ route('user.index') }}">
+                                    <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Managemen User
+                                </a>
+                                @endif
 
-
+                                <a class="dropdown-item" href="{{ route('user.edit', auth()->id()) }}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Edit Profile
+                                </a>
 
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -146,7 +147,7 @@
             <footer class="sticky-footer bg-light mt-4">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright 2021&copy; SILKA</span>
+                        <span>Copyright 2021&copy;</span>
                     </div>
                 </div>
             </footer>

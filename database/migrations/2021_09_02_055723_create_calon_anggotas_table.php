@@ -16,7 +16,7 @@ class CreateCalonAnggotasTable extends Migration
         Schema::create('calon_anggotas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('nim');
+            $table->string('nim')->unique();
             $table->string('prodi');
             $table->string('qr_code')->nullable();
             $table->timestamps();

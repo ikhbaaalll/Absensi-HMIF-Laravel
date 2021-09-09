@@ -25,7 +25,7 @@ class CalonAnggotaSeeder extends Seeder
                 'prodi' => $data[2]
             ]);
 
-            QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile(asset($calonAnggota->nim . '.svg'))->svg();
+            QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile('public/' . $calonAnggota->nim . '.svg')->svg();
 
             CalonAnggota::find($calonAnggota->id)->update(
                 [

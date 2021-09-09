@@ -19,6 +19,7 @@ class CreateKegiatansTable extends Migration
             $table->string('tempat');
             $table->dateTime('waktu');
             $table->string('password');
+            $table->string('kegiatan');
             $table->timestamps();
         });
     }

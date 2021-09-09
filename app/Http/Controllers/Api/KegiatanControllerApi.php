@@ -59,29 +59,14 @@ class KegiatanControllerApi extends Controller
         ], 200);
     }
 
-    public function update(Request $request)
+    public function destroy($id)
     {
-        $validation = Validator::make(
-            $request->all(),
-            [
-                'judul'     => ['required'],
-                'tempat'    => ['required'],
-                'waktu'     => ['required']
-            ]
-        );
-
-        if ($validation->fails()) {
-            return response()->json([
-                'error' => $validation->errors()
-            ]);
-        }
-
-        Kegiatan::find($request->id)
-            ->update($validation->validated());
+        Kegiatan::find($id)
+            ->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Kegiatan berhasil diubah'
+            'message' => 'Kegiatan berhasil dihapus'
         ], 200);
     }
 
@@ -116,9 +101,29 @@ class KegiatanControllerApi extends Controller
 
         if ($absen->wasRecentlyCreated) {
             return response()->json([
-                'success' => 'true',
+                'success' => true,
                 'message' => "Berhasil presensi {$calonAnggota->nama}"
             ], 200);
         }
+    }
+
+    public function checkPassword(Request $request, $id)
+    {
+        $kegiatan = Kegiatan::where('id', $id)->where('password', $request->password)->first();
+
+        if (!$kegiatan) {
+            return response()->json(
+                [
+                    'error' => 'Password salah'
+                ]
+            );
+        }
+
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Berhasil'
+            ]
+        );
     }
 }

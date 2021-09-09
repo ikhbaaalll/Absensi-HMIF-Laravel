@@ -17,7 +17,8 @@ class Kegiatan extends Model
         'judul',
         'tempat',
         'waktu',
-        'password'
+        'password',
+        'kegiatan'
     ];
 
     public function absen()
