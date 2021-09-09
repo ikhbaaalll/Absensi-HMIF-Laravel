@@ -41,7 +41,8 @@ class KegiatanControllerApi extends Controller
                 'judul'     => ['required'],
                 'tempat'    => ['required'],
                 'waktu'     => ['required'],
-                'password'  => ['required']
+                'password'  => ['required'],
+                'kegiatan'  => ['required']
             ]
         );
 
