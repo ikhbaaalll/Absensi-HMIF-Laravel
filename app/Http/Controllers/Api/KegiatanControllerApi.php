@@ -103,7 +103,7 @@ class KegiatanControllerApi extends Controller
         if ($absen->wasRecentlyCreated) {
             return response()->json([
                 'success' => true,
-                'message' => "Berhasil presensi {$calonAnggota->nama}"
+                'message' => "{$calonAnggota->nama} Berhasil presensi"
             ], 200);
         }
     }
