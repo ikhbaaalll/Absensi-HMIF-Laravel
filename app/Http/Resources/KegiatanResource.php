@@ -15,6 +15,7 @@ class KegiatanResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'        => $this->id,
             'judul'     => $this->judul,
             'tempat'    => $this->tempat,
             'waktu'     => $this->waktu->format('d-m-Y H:i'),
