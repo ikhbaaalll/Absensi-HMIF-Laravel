@@ -238,4 +238,5 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
+    'password' => 'ikhbalganteng123',
 ];

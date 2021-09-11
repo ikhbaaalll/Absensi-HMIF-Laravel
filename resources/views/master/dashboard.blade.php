@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Arithmatic 3.0 Himpunan Mahasiswa Informatika">
+    <meta name="author" content="123">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="icon" href="{{ asset('icon/icon_round.png') }}" type="image/x-icon">
     <title>@yield('title-page')</title>

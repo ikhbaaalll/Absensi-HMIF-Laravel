@@ -95,7 +95,7 @@ class CalonAnggotaController extends Controller
             ]
         );
 
-        if ($request->password != env('PASSWORD_IMPORT')) {
+        if ($request->password != config('app.password')) {
             return redirect()->back()->withErrors('Password salah');
         }
 
