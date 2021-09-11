@@ -29,21 +29,22 @@ class CalonAnggotaStoreRequest extends FormRequest
             Rule::unique('calon_anggotas')->ignore($this->calonanggotum->id);
 
         return [
-            'nama'  => ['required'],
-            'nim'   => ['required', 'numeric', 'digits_between:8,9', $rules],
-            'prodi' => ['required']
+            'nama'      => ['required'],
+            'nim'       => ['required', 'numeric', 'digits:9', $rules],
+            'kelompok'  => ['required', 'digits_between:1,13']
         ];
     }
 
     public function messages()
     {
         return [
-            'nama.required'         => 'Masukkan field nama',
-            'nim.required'          => 'Masukkan field nim',
-            'nim.numeric'           => 'Masukkan nim dengan angka',
-            'nim.digits_between'    => 'Masukkan NIM 8-9 karakter',
-            'nim.unique'            => 'NIM telah digunakan',
-            'prodi.required'        => 'Masukkan field prodi'
+            'nama.required'             => 'Masukkan field nama',
+            'nim.required'              => 'Masukkan field nim',
+            'nim.numeric'               => 'Masukkan nim dengan angka',
+            'nim.digits'                => 'Masukkan NIM 9 karakter',
+            'nim.unique'                => 'NIM telah digunakan',
+            'kelompok.required'         => 'Masukkan field prodi',
+            'kelompok.digits_between'   => 'Masukkan kelompok 1-13'
         ];
     }
 }
