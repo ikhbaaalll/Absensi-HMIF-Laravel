@@ -10,13 +10,17 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-gd": "*",
+        "ext-imagick": "*",
+        "barryvdh/laravel-debugbar": "^3.6",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "maatwebsite/excel": "^3.1",
         "proengsoft/laravel-jsvalidation": "^4.4",
+        "simplesoftwareio/simple-qrcode": "~4",
         "tymon/jwt-auth": "^1.0",
         "werneckbh/laravel-qr-code": "^0.1.3"
     },
