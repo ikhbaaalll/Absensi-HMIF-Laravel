@@ -131,22 +131,4 @@ class CalonAnggotaController extends Controller
 
         return redirect()->route('calonanggota.index')->with('status', "Sukses mengimport data");
     }
-
-    public function generate(CalonAnggota $calonanggotum)
-    {
-        $encryptData = Crypt::encryptString($calonanggotum->nim);
-
-        QrCode::format('png')
-            ->merge("../public/icon/icon_round.png", .3)
-            ->size(800)
-            ->generate($encryptData, "../public/qrcodes/{$calonanggotum->nim}.png");
-
-        $calonanggotum->update(
-            [
-                'qr_code' => asset("qrcodes/{$calonanggotum->nim}.png")
-            ]
-        );
-
-        return redirect()->route('calonanggota.index')->with('status', "Berhasil menggenerate QR Code {$calonanggotum->nama}");
-    }
 }
