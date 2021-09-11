@@ -38,7 +38,7 @@ class CalonAnggotaController extends Controller
         $calonAnggota = CalonAnggota::create($request->validated());
 
         QrCode::format('png')
-            ->merge("../public/icon/icon_round.png", .2)
+            ->merge(asset("icon/icon_round.png"), .2)
             ->size(800)
             ->generate(Crypt::encryptString($calonAnggota->nim), "../public/qrcodes/{$calonAnggota->nim}.png");
 
@@ -109,7 +109,7 @@ class CalonAnggotaController extends Controller
             $encryptData = Crypt::encryptString($calonAnggota->nim);
 
             QrCode::format('png')
-                ->merge("../public/icon/icon_round.png", .2)
+                ->merge(asset("icon/icon_round.png"), .2)
                 ->size(800)
                 ->generate($encryptData, "../public/qrcodes/{$calonAnggota->nim}.png");
 
