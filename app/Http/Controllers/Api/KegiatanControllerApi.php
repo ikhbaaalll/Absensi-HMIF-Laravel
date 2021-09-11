@@ -110,12 +110,10 @@ class KegiatanControllerApi extends Controller
             ]
         );
 
-        if ($absen->isDirty()) {
-            return response()->json([
-                'success' => true,
-                'message' => "{$calonAnggota->nama} Berhasil presensi"
-            ], 200);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => "{$calonAnggota->nama} Berhasil presensi"
+        ], 200);
     }
 
     public function checkPassword(Request $request, $id)
