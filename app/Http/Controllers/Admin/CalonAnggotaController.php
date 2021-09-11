@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CalonAnggotaStoreRequest;
+use App\Imports\CalonAnggotaImport;
+use App\Models\Absen;
 use App\Models\CalonAnggota;
+use App\Models\Kegiatan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use LaravelQRCode\Facades\QRCode;
+use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CalonAnggotaController extends Controller
 {
@@ -15,9 +21,9 @@ class CalonAnggotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $calonAnggotas = CalonAnggota::all();
+        $calonAnggotas = CalonAnggota::orderBy('kelompok')->get();
 
         return view('dashboard.calonanggota.index', compact('calonAnggotas'));
     }
@@ -31,13 +37,27 @@ class CalonAnggotaController extends Controller
     {
         $calonAnggota = CalonAnggota::create($request->validated());
 
-        QRCode::text(Crypt::encryptString($calonAnggota->nim))->setSize(10)->setOutfile($calonAnggota->nim . '.svg')->svg();
+        QrCode::format('png')
+            ->merge("../public/icon/icon_round.png", .2)
+            ->size(800)
+            ->generate(Crypt::encryptString($calonAnggota->nim), "../public/qrcodes/{$calonAnggota->nim}.png");
 
         CalonAnggota::find($calonAnggota->id)->update(
             [
-                'qr_code'   => asset("{$calonAnggota->nim}.svg")
+                'qr_code'   => asset("qrcodes/{$calonAnggota->nim}.png")
             ]
         );
+
+        $kegiatans = Kegiatan::all();
+
+        foreach ($kegiatans as $kegiatan) {
+            Absen::create(
+                [
+                    'kegiatan_id' => $kegiatan->id,
+                    'calon_anggota_id' => $calonAnggota->id
+                ]
+            );
+        }
 
         return redirect()->route('calonanggota.index')->with('status', "Sukses menambah calon anggota {$calonAnggota->nama}");
     }
@@ -59,5 +79,74 @@ class CalonAnggotaController extends Controller
         $calonanggotum->delete();
 
         return redirect()->route('calonanggota.index')->with('status', "Sukses menghapus {$calonanggotum->nama}");
+    }
+
+    public function importView()
+    {
+        return view('dashboard.calonanggota.import');
+    }
+
+    public function importStore(Request $request)
+    {
+        $request->validate(
+            [
+                'file'      => ['required', 'mimes:xlsx'],
+                'kelompok'  => ['integer', 'required']
+            ]
+        );
+
+        if ($request->password != env('PASSWORD_IMPORT')) {
+            return redirect()->back()->withErrors('Password salah');
+        }
+
+        Excel::import(new CalonAnggotaImport, $request->file('file'));
+
+        $calonAnggotas = CalonAnggota::where('kelompok', $request->kelompok)->get();
+
+        $kegiatans = Kegiatan::all();
+
+        foreach ($calonAnggotas as $calonAnggota) {
+            $encryptData = Crypt::encryptString($calonAnggota->nim);
+
+            QrCode::format('png')
+                ->merge("../public/icon/icon_round.png", .2)
+                ->size(800)
+                ->generate($encryptData, "../public/qrcodes/{$calonAnggota->nim}.png");
+
+            $calonAnggota->update(
+                [
+                    'qr_code' => asset("qrcodes/{$calonAnggota->nim}.png")
+                ]
+            );
+
+            foreach ($kegiatans as $kegiatan) {
+                Absen::create(
+                    [
+                        'kegiatan_id'       => $kegiatan->id,
+                        'calon_anggota_id'  => $calonAnggota->id
+                    ]
+                );
+            }
+        }
+
+        return redirect()->route('calonanggota.index')->with('status', "Sukses mengimport data");
+    }
+
+    public function generate(CalonAnggota $calonanggotum)
+    {
+        $encryptData = Crypt::encryptString($calonanggotum->nim);
+
+        QrCode::format('png')
+            ->merge("../public/icon/icon_round.png", .3)
+            ->size(800)
+            ->generate($encryptData, "../public/qrcodes/{$calonanggotum->nim}.png");
+
+        $calonanggotum->update(
+            [
+                'qr_code' => asset("qrcodes/{$calonanggotum->nim}.png")
+            ]
+        );
+
+        return redirect()->route('calonanggota.index')->with('status', "Berhasil menggenerate QR Code {$calonanggotum->nama}");
     }
 }
