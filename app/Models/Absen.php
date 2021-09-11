@@ -14,6 +14,7 @@ class Absen extends Model
     public $fillable = [
         'calon_anggota_id',
         'kegiatan_id',
+        'kehadiran'
     ];
 
     public function calonAnggota()

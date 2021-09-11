@@ -15,8 +15,9 @@ class CreateAbsensTable extends Migration
     {
         Schema::create('absens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('calon_anggota_id')->constrained();
-            $table->foreignId('kegiatan_id')->constrained();
+            $table->foreignId('calon_anggota_id')->constrained()->onDelete('cascade');
+            $table->foreignId('kegiatan_id')->constrained()->onDelete('cascade');
+            $table->boolean('kehadiran')->default(false);
         });
     }
 
