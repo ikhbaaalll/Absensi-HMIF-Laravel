@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
+    <link rel="icon" href="{{ asset('icon/icon_round.png') }}" type="image/x-icon">
     <title>@yield('title-page')</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -36,8 +36,6 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-            <hr class="sidebar-divider d-none d-md-block">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('kegiatan.index') }}">
@@ -53,6 +51,12 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('data.presensi') }}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Data Presensi</span></a>
+            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -101,16 +105,16 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name}}</span>
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
                                 <i class="far fa-user"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                @if(auth()->id() == 1)
-                                <a class="dropdown-item" href="{{ route('user.index') }}">
-                                    <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Managemen User
-                                </a>
+                                @if (auth()->id() == 1)
+                                    <a class="dropdown-item" href="{{ route('user.index') }}">
+                                        <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Managemen User
+                                    </a>
                                 @endif
 
                                 <a class="dropdown-item" href="{{ route('user.edit', auth()->id()) }}">
@@ -147,7 +151,7 @@
             <footer class="sticky-footer bg-light mt-4">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright 2021&copy;</span>
+                        <span>Copyright 2021&copy; Himpunan Mahasiswa Informatika</span>
                     </div>
                 </div>
             </footer>
@@ -173,7 +177,8 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                    </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                         <form action="{{ route('logout') }}" method="POST">
