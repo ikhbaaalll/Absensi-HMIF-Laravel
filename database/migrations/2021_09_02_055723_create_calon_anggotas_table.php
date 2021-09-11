@@ -17,7 +17,7 @@ class CreateCalonAnggotasTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('nim')->unique();
-            $table->string('prodi');
+            $table->integer('kelompok');
             $table->string('qr_code')->nullable();
             $table->timestamps();
         });

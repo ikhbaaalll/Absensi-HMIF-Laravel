@@ -12,7 +12,12 @@ class CalonAnggota extends Model
     public $fillable = [
         'nama',
         'nim',
-        'prodi',
+        'kelompok',
         'qr_code'
     ];
+
+    public function absen()
+    {
+        return $this->hasMany(Absen::class);
+    }
 }
