@@ -52,7 +52,18 @@ class KegiatanControllerApi extends Controller
             ]);
         }
 
-        Kegiatan::create($validation->validated());
+        $kegiatan = Kegiatan::create($validation->validated());
+
+        $calonAnggotas = CalonAnggota::all();
+
+        foreach ($calonAnggotas as $calonAnggota) {
+            Absen::create(
+                [
+                    'calon_anggota_id'  => $calonAnggota->id,
+                    'kegiatan_id'       => $kegiatan->id
+                ]
+            );
+        }
 
         return response()->json([
             'success' => true,
