@@ -100,18 +100,17 @@ class KegiatanControllerApi extends Controller
             ->where('calon_anggota_id', $calonAnggota->id)
             ->first();
 
-        if ($check) {
+        if ($check->kehadiran == '1') {
             return response()->json(['error' => "{$calonAnggota->nama} telah melakukan presensi"], 422);
         }
 
-        $absen = Absen::create(
+        $absen = $check->update(
             [
-                'kegiatan_id'       => $request->id,
-                'calon_anggota_id'  => $calonAnggota->id
+                'kehadiran' => 1
             ]
         );
 
-        if ($absen->wasRecentlyCreated) {
+        if ($absen->isDirty()) {
             return response()->json([
                 'success' => true,
                 'message' => "{$calonAnggota->nama} Berhasil presensi"
