@@ -12,18 +12,20 @@ class DataController extends Controller
 {
     public function index(Request $request)
     {
-        $calonAnggotas = CalonAnggota::when(request()->filled('kelompok'), function ($query) {
-            $query->where('kelompok', request()->get('kelompok'));
-        })
+        $calonAnggotas = CalonAnggota::with('absen', 'absen.kegiatan')
+            ->withCount(['absen as total_absen' => function ($query) {
+                $query->where('kehadiran', 1);
+            }])
+            ->when(request()->filled('kelompok'), function ($query) {
+                $query->where('kelompok', request()->get('kelompok'));
+            })
             ->orderBy('kelompok')
             ->get();
-
-        $absens = Absen::all();
 
         $kegiatans = Kegiatan::all();
 
         $kelompoks = CalonAnggota::select('kelompok')->distinct()->orderBy('kelompok')->get();
 
-        return view('dashboard.data.index', compact('calonAnggotas', 'kegiatans', 'kelompoks', 'absens'));
+        return view('dashboard.data.index', compact('calonAnggotas', 'kegiatans', 'kelompoks'));
     }
 }

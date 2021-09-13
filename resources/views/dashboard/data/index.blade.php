@@ -58,15 +58,14 @@
                                     <td>{{ $calonAnggota->nim }}</td>
                                     <td>{{ $calonAnggota->kelompok }}</td>
                                     @foreach ($kegiatans as $kegiatan)
-                                        @foreach ($absens as $absen)
-                                            @if ($absen->calon_anggota_id == $calonAnggota->id and $absen->kegiatan_id == $kegiatan->id)
+                                        @foreach ($calonAnggota->absen as $absen)
+                                            @if ($absen->kegiatan_id == $kegiatan->id)
                                                 <td>{{ $absen->kehadiran == 0 ? 'X' : 'O' }}</td>
                                             @endif
                                         @endforeach
                                     @endforeach
-                                    <td>{{ $absens->where('calon_anggota_id', $calonAnggota->id)->where('kehadiran', 1)->count() }}
+                                    <td>{{ $calonAnggota->total_absen }}
                                     </td>
-                                    {{-- <td>{{ $absen->absen[0]->kehadiran == 0 ? 'X' : 'O' }}</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
