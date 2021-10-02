@@ -138,12 +138,14 @@ class KegiatanControllerApi extends Controller
 
     public function setAbsen(Request $request, $id)
     {
-        $absen = Absen::find($id)->update(['kehadiran' => $request->kehadiran]);
+        Absen::find($id)->update(['kehadiran' => $request->kehadiran]);
+
+        $absen = Absen::find($id);
 
         return  response()->json(
             [
                 'success' => true,
-                'message' => ($absen->kehadiran == 1) ? true : false
+                'message' => ($absen->kehadiran == 1) ? '1' : '0'
             ]
         );
     }
