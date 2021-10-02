@@ -24,4 +24,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1'], function () {
     Route::post('kegiatan/checkpassword/{id}', [KegiatanControllerApi::class, 'checkPassword']);
 
     Route::apiResource('kegiatan',  KegiatanControllerApi::class)->only(['store', 'index', 'show', 'destroy']);
+
+    Route::post('absen/{id}',       [KegiatanControllerApi::class, 'setAbsen']);
 });

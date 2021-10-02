@@ -26,7 +26,7 @@ class KegiatanControllerApi extends Controller
         );
     }
 
-    public function show(Request $request, $id)
+    public function show($id)
     {
         $absen = Absen::with('calonAnggota')->where('kegiatan_id', $id)->get();
 
@@ -132,6 +132,18 @@ class KegiatanControllerApi extends Controller
             [
                 'success' => true,
                 'message' => 'Berhasil'
+            ]
+        );
+    }
+
+    public function setAbsen(Request $request, $id)
+    {
+        $absen = Absen::find($id)->update(['kehadiran' => $request->kehadiran]);
+
+        return  response()->json(
+            [
+                'success' => true,
+                'message' => ($absen->kehadiran == 1) ? true : false
             ]
         );
     }
